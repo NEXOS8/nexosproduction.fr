@@ -724,6 +724,80 @@
     .footer-links a:hover {
       color: rgba(255, 255, 255, 0.85);
     }
+
+    /* ==============================
+       SECTION À PROPOS
+    ============================== */
+    .about-block {
+      display: flex;
+      gap: 1.75rem;
+      align-items: flex-start;
+    }
+
+    .about-photo {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      overflow: hidden;
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-block .content p + p {
+      margin-top: 0.875rem;
+    }
+
+    /* ==============================
+       SECTION FAQ
+    ============================== */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .faq-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border-lt);
+    }
+
+    .faq-item:first-child {
+      padding-top: 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .faq-q {
+      font-family: var(--ff-head);
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      max-width: unset;
+    }
+
+    .faq-a {
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      max-width: 60ch;
+    }
   </style>
 </head>
 <body>
@@ -877,6 +951,66 @@
               <p>NexosProduction, c'est une personne. Pas de contrat. Pas d'engagement. Si vous n'êtes pas satisfait, vous arrêtez. C'est aussi simple que ça.</p>
               <div class="callout-block" style="margin-top: 1.75rem;">
                 Je n'accepte pas tous les dossiers. Si je ne suis pas convaincu de pouvoir vous faire progresser, je vous le dis avant de commencer et je ne vous facture rien.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 — QUI JE SUIS -->
+    <section id="apropos" class="surface">
+      <div class="container">
+        <div class="section-wrap">
+          <div class="editorial-row">
+            <div class="row-label">
+              <span class="row-num">06</span>
+              <span class="row-title">Qui je suis</span>
+            </div>
+            <div class="content">
+              <div class="about-block">
+                <div class="about-photo">
+                  <img src="./Screenshot_20260703-171333.png" alt="Théo Vignal">
+                </div>
+                <div>
+                  <p>Je m'appelle Théo Vignal. Je suis basé à Lyon et je baigne dans le digital depuis longtemps.</p>
+                  <p>J'ai creusé le référencement local Google Maps parce que c'est le levier le plus concret pour les indépendants qui vivent de leur zone géographique. Pas de jargon, pas de fausse promesse — juste un travail méthodique sur ce que Google évalue réellement.</p>
+                  <p>NexosProduction c'est moi seul. Vous avez mon numéro, vous me parlez directement, du premier au dernier jour.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 — QUESTIONS FRÉQUENTES -->
+    <section id="faq">
+      <div class="container">
+        <div class="section-wrap">
+          <div class="editorial-row">
+            <div class="row-label">
+              <span class="row-num">07</span>
+              <span class="row-title">Questions fréquentes</span>
+            </div>
+            <div class="content">
+              <div class="faq-list">
+                <div class="faq-item">
+                  <p class="faq-q">Combien de temps avant de voir des résultats&nbsp;?</p>
+                  <p class="faq-a">Le référencement local prend 3 à 6 mois pour se consolider. C'est la réalité du SEO, et c'est dit honnêtement dès le départ. Les premières améliorations sur la fiche Google Business Profile sont visibles dès le premier mois.</p>
+                </div>
+                <div class="faq-item">
+                  <p class="faq-q">Y a-t-il un engagement ou un contrat&nbsp;?</p>
+                  <p class="faq-a">Non. L'abonnement est mensuel, sans engagement. Vous pouvez arrêter à tout moment, sans pénalité ni démarche compliquée.</p>
+                </div>
+                <div class="faq-item">
+                  <p class="faq-q">Qui s'occupe de mon dossier&nbsp;?</p>
+                  <p class="faq-a">Théo Vignal, seul. NexosProduction est une micro-agence d'une personne. Vous avez le même interlocuteur du premier au dernier jour. Réponse garantie sous 48&nbsp;heures.</p>
+                </div>
+                <div class="faq-item">
+                  <p class="faq-q">Est-ce que ça marche pour mon métier&nbsp;?</p>
+                  <p class="faq-a">Si vous êtes un indépendant ou un artisan qui vit de sa zone géographique — coiffeur, plombier, kiné, garagiste, tatoueur, électricien, ostéopathe — oui. Le référencement local Google Maps est exactement fait pour ce type d'activité.</p>
+                </div>
               </div>
             </div>
           </div>
