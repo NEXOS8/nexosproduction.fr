@@ -7,23 +7,23 @@
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 :root {
-  --bg: #FFFFFF;
-  --surface: #F7F5F1;
-  --surface-2: #EDEBE5;
+  --bg: #F5F3EE;
+  --surface: #EDEAE3;
+  --surface-2: #E5E2DA;
   --border: rgba(0,0,0,0.08);
-  --border-mid: rgba(0,0,0,0.13);
-  --border-gold: rgba(168,101,32,0.26);
-  --text: #120F0B;
-  --text-mid: #3C3830;
-  --text-muted: #7A7268;
-  --gold: #A86520;
-  --gold-lt: #C88A30;
-  --gold-dk: #7A4C14;
-  --gold-dim: rgba(168,101,32,0.08);
+  --border-mid: #CECABC;
+  --border-gold: rgba(37,77,33,0.2);
+  --text: #1C1B17;
+  --text-mid: #514F48;
+  --text-muted: #8A887F;
+  --gold: #254D21;
+  --gold-lt: #3a6b35;
+  --gold-dk: #1A3C17;
+  --gold-dim: rgba(37,77,33,0.07);
   --sh-card: 0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
-  --ff-display: 'Syne', sans-serif;
-  --ff-body: 'Outfit', sans-serif;
-  --ff-mono: 'IBM Plex Mono', monospace;
+  --ff-display: 'Lora', Georgia, serif;
+  --ff-body: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+  --ff-mono: 'Source Sans 3', sans-serif;
   --max-w: 1080px;
   --gutter: clamp(1.25rem, 5vw, 3rem);
   --section-y: clamp(3.5rem, 8vw, 6.5rem);
@@ -33,7 +33,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--ff-body);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -80,7 +80,7 @@ strong { font-weight: 600; color: var(--text); }
   padding: 0.8rem 1.5rem; border-radius: 999px; cursor: pointer;
   transition: transform .2s, box-shadow .2s, background .2s; white-space: nowrap;
 }
-.btn-primary { background: var(--gold); color: #fff; box-shadow: 0 10px 30px rgba(168,101,32,0.22); }
+.btn-primary { background: var(--gold); color: #fff; box-shadow: 0 10px 30px rgba(37,77,33,0.22); }
 .btn-primary:hover { background: var(--gold-dk); transform: translateY(-2px); }
 .btn-ghost { border: 1px solid var(--border-mid); color: var(--text); }
 .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
@@ -95,7 +95,7 @@ strong { font-weight: 600; color: var(--text); }
 .page-hero { padding: clamp(2rem,5vw,3.5rem) 0 clamp(2.5rem,6vw,4rem); position: relative; }
 .page-hero::after {
   content: ''; position: absolute; top: -10%; right: -5%; width: 480px; height: 480px;
-  background: radial-gradient(circle, rgba(200,138,48,0.16), transparent 70%);
+  background: radial-gradient(circle, rgba(37,77,33,0.08), transparent 70%);
   pointer-events: none; z-index: -1;
 }
 .page-hero p.lead { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--text-mid); max-width: 640px; margin-top: 1.2rem; }
