@@ -1,13 +1,13 @@
 {
-  "name": "NexosProduction — Agence SEO Local Lyon",
+  "name": "NexosProduction — Référencement local Google Maps",
   "short_name": "NexosProduction",
-  "description": "Agence SEO local à Lyon : site vitrine, référencement Google et Google Maps pour artisans, commerçants, micro-entrepreneurs et PME.",
+  "description": "Référencement local Google Maps pour artisans, commerçants et indépendants : optimisation Google Business Profile, citations et gestion des avis.",
   "lang": "fr",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#F7F5F1",
-  "theme_color": "#A86520",
+  "background_color": "#F5F3EE",
+  "theme_color": "#254D21",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
