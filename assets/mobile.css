@@ -87,9 +87,9 @@
   .company-types h3{font-size:1.28rem}
   .company-types p{font-size:.93rem;line-height:1.5}
   .founder-layout{display:block}
-  .founder-photo{width:104px;margin:0 0 1.4rem}
+  .founder-photo{width:104px;height:104px;aspect-ratio:1/1;margin:0 0 1.4rem}
   .founder-photo::after{right:-.55rem;bottom:-.55rem;border-radius:50%}
-  .founder-photo img{border-radius:50%}
+  .founder-photo img{width:104px;height:104px;aspect-ratio:1/1;border-radius:50%;object-fit:cover}
   .founder-copy p{font-size:.95rem;line-height:1.55}
   .founder-signature{margin-top:1.25rem;padding-top:1rem}
   .faq-layout{display:block}
