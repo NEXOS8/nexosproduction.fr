@@ -31,6 +31,9 @@
   .path-list li{grid-template-columns:1.55rem 1fr;gap:.35rem;min-height:48px;padding:.65rem 0;font-size:.98rem}
   .path-list li:nth-child(5){grid-column:1/-1}
   .path-list .arrow{display:none}
+  .hero-compact{padding-block:3rem 2.6rem}
+  .hero-compact .hero-copy h1{max-width:11ch;font-size:clamp(2.5rem,11.7vw,3.05rem)}
+  .hero-reassurance{margin-top:.9rem;font-size:.78rem;line-height:1.45}
   .hero-principles{padding-block:.85rem;overflow:hidden}
   .hero-principles .principle-list{justify-content:flex-start;width:auto;max-width:none;padding-inline:var(--gutter);overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity}
   .principle-list{display:flex;flex-wrap:nowrap;gap:.5rem;text-align:left}
@@ -63,6 +66,14 @@
   .problem-card p,.approach-step p,.lever-card p,.difference-card p{font-size:.94rem;line-height:1.55}
   .approach-note{margin-top:1.7rem;padding:1rem 1.05rem;font-size:1.05rem;line-height:1.45}
   .lever-legend{margin-top:1.35rem;font-size:.82rem;line-height:1.5}
+  .problem-grid-short,.approach-grid-short{display:grid;grid-template-columns:1fr;grid-auto-flow:row;grid-auto-columns:auto;gap:.75rem;margin-inline:0;padding:0;overflow:visible;scroll-snap-type:none}
+  .problem-grid-short .problem-card,.approach-grid-short .approach-step{min-height:0;padding:1.2rem;background:var(--card);border:1px solid var(--line)}
+  .problem-grid-short .problem-card .num,.approach-grid-short .approach-step .step-num{margin-bottom:.85rem}
+  .service-grid{grid-template-columns:1fr;gap:.75rem;background:transparent;border:0}
+  .service-card{min-height:0;padding:1.25rem;border:1px solid var(--line)}
+  .service-card .num{margin-bottom:.9rem}.service-card p{margin-bottom:1rem}
+  .outcome-layout{gap:1.5rem}.outcome-list li{padding:1rem 0}
+  .founder-layout-short .founder-photo{max-width:104px}
 
   /* Le système devient un parcours compact avant le texte */
   .system-layout{gap:1.8rem}
@@ -122,6 +133,18 @@
   .contact-option strong{font-size:1.05rem}
   .contact-option small{font-size:.8rem}
   .contact-note{font-size:.82rem;line-height:1.45}
+
+  /* Pages d'expertise */
+  .service-hero{padding:2.6rem 0 3rem}
+  .service-hero h1{max-width:11ch;font-size:2.65rem;line-height:1.04}
+  .service-hero .lead{font-size:1rem}
+  .service-hero-actions{display:grid;grid-template-columns:1fr;gap:.65rem;margin-top:1.5rem}
+  .service-hero-actions .btn{width:100%}
+  .service-summary{padding:1.2rem}
+  .service-content-grid{gap:1.75rem}
+  .service-steps{grid-template-columns:1fr;gap:.75rem;background:transparent;border:0}
+  .service-step{padding:1.2rem;border:1px solid var(--line)}
+  .related-services{display:grid;grid-template-columns:1fr;margin-top:1.5rem}
 
   /* Pages légales */
   .breadcrumb{padding-block:.85rem}
