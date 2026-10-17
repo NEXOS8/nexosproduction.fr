@@ -26,3 +26,5 @@ h1,h2,h3,h4{font-weight:550;line-height:1.12;letter-spacing:-.05em}h1{font-size:
 .hero-grid{align-items:start}.section-head>*{min-width:0}
 @media(max-width:379px){.expertise-section h2{font-size:32px}.section-head{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.service-hero-grid>*,.service-content-grid>*,.contact-layout>*{min-width:0}.service-hero h1,.service-content-grid h2,.contact-copy h1{overflow-wrap:anywhere;hyphens:auto}
+@media(max-width:379px){.service-hero h1{font-size:38px}.contact-copy h1{font-size:44px}}

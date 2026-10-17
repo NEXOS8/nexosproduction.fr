@@ -80,7 +80,7 @@
       if (!form.reportValidity()) return;
       const website = form.elements.website.value.trim();
       const details = form.elements.message.value.trim();
-      draft = `Bonjour Théo,\n\nMon activité : ${activity}\n${website ? `Mon site : ${website}\n` : ''}Ma priorité : ${need.selectedOptions[0].textContent}\n${details ? `\n${details}\n` : ''}\nPouvons-nous en discuter ?\n\nMerci !`;
+      draft = `Bonjour,\n\nMon activité : ${activity}\n${website ? `Mon site : ${website}\n` : ''}Ma priorité : ${need.selectedOptions[0].textContent}\n${details ? `\n${details}\n` : ''}\nPouvons-nous en discuter ?\n\nMerci !`;
       body.textContent = draft;
       document.querySelector('#email-draft').href = 'mailto:contact@nexoslocal.fr?subject=' + encodeURIComponent('Parlons de mon projet — ' + activity) + '&body=' + encodeURIComponent(draft);
       document.querySelector('#whatsapp-draft').href = 'https://wa.me/33631686832?text=' + encodeURIComponent(draft);
