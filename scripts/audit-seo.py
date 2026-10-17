@@ -56,6 +56,8 @@ class Page(HTMLParser):
             self.refs.append(attrs["src"])
         if tag == "img":
             self.images.append(attrs)
+            if attrs.get("srcset"):
+                self.refs.extend(candidate.strip().split()[0] for candidate in attrs["srcset"].split(","))
 
     def handle_data(self, data):
         if self.capture:
