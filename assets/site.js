@@ -54,7 +54,10 @@
     else if (href.includes('wa.me/')) method = 'whatsapp';
     else if (href.startsWith('mailto:')) method = 'email';
     else if (/^\/contact(?:[?#]|$)/.test(href)) method = 'page_contact';
-    if (method) track('contact_intent', { contact_method: method });
+    if (method) {
+      track('contact_intent', { contact_method: method });
+      if (method === 'telephone') track('phone_click');
+    }
   });
 
   const form = document.querySelector('#project-form');
