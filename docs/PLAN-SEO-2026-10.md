@@ -125,3 +125,7 @@ Le clic sur un numéro ne prouve pas qu’un appel a abouti. L’appel reçu ne 
 - Le périmètre exact entre conseil, coordination et exécution.
 - Les offres, tarifs et preuves qui peuvent être publiés.
 - La configuration de consentement et des balises Google avant toute interprétation des données.
+
+## Guide demandes de devis — 18 octobre 2026
+
+`/obtenir-plus-demandes-devis-artisan` répond à une intention informationnelle distincte de l’offre `/artisans-batiment`. Le guide comporte un diagnostic par situation, une méthode contextualisée, des sources officielles et des liens vers l’accompagnement. Les exemples chiffrés sont explicitement fictifs. Le bouton e-mail ouvre un message avec un objet propre au guide ; il ne prouve pas l’envoi ni la réception. L’objectif commercial reste une demande réelle reçue, pas le nombre de pages publiées ou d’impressions.
