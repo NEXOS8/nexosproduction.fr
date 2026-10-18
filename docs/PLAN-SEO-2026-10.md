@@ -1,6 +1,21 @@
 # Plan SEO et acquisition — NexosLocal
 
-Mise à jour : 17 octobre 2026.
+Mise à jour : 18 octobre 2026.
+
+## Marque généraliste et spécialisation artisans
+
+L’accueil et l’accompagnement acquisition B2C restent généralistes. La page `/artisans-batiment` présente une spécialisation issue de l’expérience déclarée du fondateur : optimisation des fiches Google Maps, site si nécessaire, hébergement et entretien compris dans le périmètre convenu, conseils photos et avis. La publicité et le suivi commercial restent mobilisables selon le besoin ; les dépenses publicitaires sont distinguées de la prestation.
+
+La page est reliée à l’accueil, aux menus, aux pieds de page et aux pages stratégie et référencement local. Ses liens contact utilisent `?besoin=artisans`, reconnu par le formulaire existant. Le formulaire prépare toujours un message à envoyer par e-mail ou WhatsApp : il ne transmet pas directement la demande et aucune mesure de réception n’est revendiquée.
+
+Intention commerciale retenue : accompagnement marketing pour artisans du bâtiment. Les recherches exploratoires distinguent cette intention des guides « trouver des chantiers » et des plateformes de vente de contacts. Aucun volume de recherche ni niveau de difficulté chiffré n’est établi. Ne pas annoncer que ce ciblage garantit un classement.
+
+Sources de cadrage :
+
+- https://www.francenum.gouv.fr/activateurs/com-dartisans : exemple d’offre de prestataire associant site, communication et publicité pour les artisans.
+- https://support.google.com/business/answer/7091?hl=fr : facteurs de classement local et recommandations Google.
+
+Prochaines étapes : obtenir un cas client publiable et des preuves réelles, observer l’indexation puis les impressions de cette page, et approfondir les requêtes avant de produire des pages par métier ou ville. Ne pas inventer de références, de prix, de garanties d’appels ou d’inclusion illimitée dans l’offre.
 
 ## Positionnement retenu
 
@@ -20,6 +35,7 @@ Le nombre d’appels entrants est l’indicateur principal exprimé par la cible
 | --- | --- | --- |
 | `/` | consultant acquisition client B2C | Présenter la promesse, les problèmes traités et orienter vers le diagnostic |
 | `/strategie-acquisition-client-b2c` | stratégie acquisition client B2C | Page commerciale principale |
+| `/artisans-batiment` | accompagnement marketing artisans bâtiment | Spécialisation Google Maps, site et acquisition, sans remplacer l’offre générale |
 | `/audit-acquisition` | diagnostic acquisition marketing / client | Identifier les freins et cadrer la mission |
 | `/generer-plus-de-prospects-b2c` | comment générer plus de prospects B2C | Guide de découverte qui renvoie vers la page commerciale |
 | `/referencement-naturel` | référencement naturel et acquisition | Présenter le SEO comme un levier à évaluer |
