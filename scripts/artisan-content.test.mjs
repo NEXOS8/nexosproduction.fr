@@ -36,3 +36,25 @@ test('Aucune preuve Maïka non validée ni appel à contacter personnellement le
     assert.doesNotMatch(await read(file), /Ma[iï]ka|(?:contacter|appeler|appeller)\s+Théo/i, file);
   }
 });
+
+test('La démonstration est identifiée comme notre propre site, pas un résultat client', async () => {
+  const source = await read('artisans-batiment.html');
+  assert.match(source, /id="demonstration"/);
+  assert.match(source, /Exemple de mise en œuvre sur notre site, pas un cas client ni une preuve de résultat commercial/);
+  assert.match(source, /src="\/assets\/demonstration-contact-nexoslocal-v1\.jpg" width="1265" height="712" loading="lazy"/);
+  assert.match(source, /style="width:100%;height:auto;margin-top:24px"/);
+  const bytes = await readFile(new URL('assets/demonstration-contact-nexoslocal-v1.jpg', root));
+  assert.equal(bytes[0], 0xff);
+  assert.equal(bytes[1], 0xd8);
+  assert.ok(bytes.length < 500000, 'Capture trop lourde pour cet usage');
+});
+
+test('Les intentions site artisan et prestation Maps sont reliées sans pages de ville artificielles', async () => {
+  const artisans = await read('artisans-batiment.html');
+  const local = await read('referencement-local.html');
+  assert.match(artisans, /id="site-internet-artisan"/);
+  assert.match(local, /id="prestations"/);
+  assert.match(artisans, /href="\/referencement-local#prestations"/);
+  assert.match(local, /href="\/artisans-batiment#site-internet-artisan"/);
+  assert.match(await read('index.html'), /<title>Consultant en acquisition client B2C \| NexosLocal<\/title>/);
+});
