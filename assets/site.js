@@ -1,3 +1,5 @@
+import { CONTACT_EMAIL, parseContactContext, contactCopy, buildContactDraft, directContactHref, copyContactText } from './contact-draft.mjs?v=20261023-1';
+
 (() => {
   const menus = [...document.querySelectorAll('.mobile-menu')];
   const syncMenus = () => document.body.classList.toggle('menu-open', menus.some(menu => menu.open));
@@ -40,64 +42,81 @@
     window.addEventListener('hashchange', () => { if (fromHash()) showProblem(fromHash().id); });
   }
 
-  // Clicks and drafts are intentions, never received or qualified leads.
-  const track = (event, properties = {}) => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event, page_path: window.location.pathname, ...properties });
-  };
-  document.addEventListener('click', event => {
-    const link = event.target.closest('a[href]');
-    if (!link) return;
-    const href = link.getAttribute('href');
-    let method;
-    if (href.startsWith('tel:')) method = 'telephone';
-    else if (href.includes('wa.me/')) method = 'whatsapp';
-    else if (href.startsWith('mailto:')) method = 'email';
-    else if (/^\/contact(?:[?#]|$)/.test(href)) method = 'page_contact';
-    if (method) {
-      track('contact_intent', { contact_method: method });
-      if (method === 'telephone') track('phone_click');
-    }
-  });
-
   const form = document.querySelector('#project-form');
   if (form) {
     form.hidden = false;
     const need = form.elements.need;
-    const rawNeed = new URLSearchParams(window.location.search).get('besoin');
-    const requestedNeed = ({local: 'expertises', seo: 'expertises', suivi: 'automatisation'})[rawNeed] || rawNeed;
-    if ([...need.options].some(option => option.value === requestedNeed)) need.value = requestedNeed;
+    const context = parseContactContext(window.location.search);
+    need.value = context.need;
     const preview = document.querySelector('#message-preview');
     const body = document.querySelector('#message-body');
     const status = document.querySelector('#copy-status');
     let draft = '';
+    const updateContactCopy = () => {
+      const copy = contactCopy(need.value);
+      const labels = {
+        'contact-breadcrumb': copy.breadcrumb,
+        'contact-eyebrow': copy.eyebrow,
+        'contact-heading-start': copy.headingStart,
+        'contact-heading-end': copy.headingEnd,
+        'contact-lead': copy.lead,
+        'contact-response': copy.response,
+        'contact-form-heading': copy.formHeading,
+        'contact-form-intro': copy.formIntro,
+        'activity-label-text': copy.activityLabel,
+        'website-label-text': copy.websiteLabel,
+        'details-label-text': copy.detailsLabel,
+        'prepare-message-label': copy.submitLabel,
+      };
+      for (const [id, text] of Object.entries(labels)) document.getElementById(id).textContent = text;
+      form.elements.activity.placeholder = copy.activityPlaceholder;
+      form.elements.website.placeholder = copy.websitePlaceholder;
+      form.elements.message.placeholder = copy.detailsPlaceholder;
+      document.querySelector('#zone-field').hidden = !copy.artisan;
+      document.querySelector('#mini-diagnostic-details').hidden = !copy.artisan;
+      document.querySelector('#direct-email').href = directContactHref({ need: need.value, origin: context.origin });
+      preview.hidden = true;
+      form.elements.activity.setCustomValidity('');
+    };
+    updateContactCopy();
+    need.addEventListener('change', updateContactCopy);
     form.addEventListener('input', () => { preview.hidden = true; });
     form.addEventListener('change', () => { preview.hidden = true; });
     form.addEventListener('submit', event => {
       event.preventDefault();
-      const activity = form.elements.activity.value.trim();
-      form.elements.activity.setCustomValidity(activity ? '' : 'Indiquez votre activité.');
-      if (!form.reportValidity()) return;
-      const website = form.elements.website.value.trim();
-      const details = form.elements.message.value.trim();
-      draft = `Bonjour,\n\nMon activité : ${activity}\n${website ? `Mon site : ${website}\n` : ''}Ma priorité : ${need.selectedOptions[0].textContent}\n${details ? `\n${details}\n` : ''}\nPouvons-nous en discuter ?\n\nMerci !`;
+      let prepared;
+      try {
+        prepared = buildContactDraft({
+          activity: form.elements.activity.value,
+          zone: form.elements.zone.value,
+          website: form.elements.website.value,
+          need: need.value,
+          details: form.elements.message.value,
+          origin: context.origin,
+        });
+        form.elements.activity.setCustomValidity('');
+      } catch (error) {
+        form.elements.activity.setCustomValidity(error.message);
+      }
+      if (!form.reportValidity() || !prepared) return;
+      draft = prepared.body;
       body.textContent = draft;
-      document.querySelector('#email-draft').href = 'mailto:contact@nexoslocal.fr?subject=' + encodeURIComponent('Parlons de mon projet — ' + activity) + '&body=' + encodeURIComponent(draft);
-      document.querySelector('#whatsapp-draft').href = 'https://wa.me/33631686832?text=' + encodeURIComponent(draft);
+      document.querySelector('#email-draft').href = prepared.emailHref;
+      document.querySelector('#whatsapp-draft').href = prepared.whatsappHref;
       status.textContent = '';
       preview.hidden = false;
       preview.focus({ preventScroll: true });
       preview.scrollIntoView({ block: 'nearest', behavior: 'auto' });
-      track('contact_draft_prepared', { contact_need: need.value });
     });
     form.elements.activity.addEventListener('input', () => form.elements.activity.setCustomValidity(''));
     document.querySelector('#copy-message').addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(draft);
-        status.textContent = 'Message copié. Vous pouvez le coller dans un e-mail à contact@nexoslocal.fr.';
-      } catch {
-        status.textContent = 'Sélectionnez le message ci-dessus pour le copier, puis écrivez à contact@nexoslocal.fr.';
-      }
+      status.textContent = (await copyContactText(draft, navigator.clipboard)).message;
+    });
+    const copyEmail = document.querySelector('#copy-email');
+    const emailStatus = document.querySelector('#copy-email-status');
+    copyEmail.hidden = false;
+    copyEmail.addEventListener('click', async () => {
+      emailStatus.textContent = (await copyContactText(CONTACT_EMAIL, navigator.clipboard, 'email')).message;
     });
   }
 })();

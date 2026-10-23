@@ -188,6 +188,26 @@ def main():
         if not route_file(urlsplit(icon_url).path).is_file():
             errors.append(f"Manifeste : icône absente : {icon_url}")
         assets.add(icon_url)
+    # Les imports de modules doivent aussi exister et être contrôlés en production.
+    pending = list(assets)
+    inspected = set()
+    while pending:
+        asset_url = pending.pop()
+        if asset_url in inspected:
+            continue
+        inspected.add(asset_url)
+        asset_file = route_file(urlsplit(asset_url).path)
+        if asset_file.suffix not in (".js", ".mjs"):
+            continue
+        for ref in re.findall(r"\b(?:import|export)\s+(?:[^;\n]*?\s+from\s+)?['\"]([^'\"]+)['\"]", asset_file.read_text()):
+            imported = urljoin(asset_url, ref)
+            if urlsplit(imported).netloc != urlsplit(ORIGIN).netloc:
+                continue
+            if not route_file(urlsplit(imported).path).is_file():
+                errors.append(f"Import local absent : {imported}")
+            elif imported not in assets:
+                assets.add(imported)
+                pending.append(imported)
     live_count = 0
     if args.live:
         targets = list(urls) + sorted(assets) + [ORIGIN + "/robots.txt", ORIGIN + "/sitemap.xml"]
@@ -198,6 +218,9 @@ def main():
                     errors.append(f"HTTP {status}: {url} → {final}")
                 if url in urls and body != sources[urls[url]].encode():
                     errors.append(f"Publication différente des fichiers locaux : {url}")
+                if url in assets or url in (ORIGIN + "/robots.txt", ORIGIN + "/sitemap.xml"):
+                    if body != route_file(urlsplit(url).path).read_bytes():
+                        errors.append(f"Ressource publiée différente du fichier local : {url}")
                 if "noindex" in headers.get("X-Robots-Tag", ""):
                     errors.append(f"X-Robots-Tag noindex : {url}")
     print(json.dumps({"pages": len(pages), "sitemap_urls": len(sitemap_urls), "references": sum(len(p.refs) for p in pages.values()), "schemas": sum(len(p.schemas) for p in pages.values()), "live_requests": live_count, "errors": errors, "status": "PASS" if not errors else "FAIL"}, ensure_ascii=False, indent=2))
