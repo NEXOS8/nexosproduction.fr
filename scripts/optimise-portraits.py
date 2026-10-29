@@ -1,15 +1,15 @@
-"""Produit les variantes WebP du portrait existant, sans modifier l’original."""
+"""Produit les variantes WebP du nouveau portrait, sans modifier la source."""
 
 from pathlib import Path
 from PIL import Image, ImageOps
 
 root = Path(__file__).resolve().parents[1]
-source = root / "Screenshot_20260703-171333.png"
+source = root / "docs" / "portrait-nexoslocal-v2.png"
 with Image.open(source) as original:
     portrait = ImageOps.exif_transpose(original).convert("RGB")
-    for width in (128, 320, portrait.width):
+    for width in (128, 320, 820):
         height = round(portrait.height * width / portrait.width)
-        target = root / "assets" / f"portrait-nexoslocal-{width}-v1.webp"
+        target = root / "assets" / f"portrait-nexoslocal-{width}-v2.webp"
         portrait.resize((width, height), Image.Resampling.LANCZOS).save(
             target, "WEBP", quality=82, method=6
         )
