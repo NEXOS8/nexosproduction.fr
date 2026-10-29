@@ -86,10 +86,18 @@ test('Les quatre pages sources utilisent uniquement leur origine autorisée dans
       assert.deepEqual(url.searchParams.getAll('origine'), [expectedOrigin], file);
       assert.equal(parseContactContext(url.search).origin, expectedOrigin, file);
     }
-    const diagnosticLinks = links.filter(link => link.label === 'Demander mon mini-diagnostic offert');
-    assert.ok(diagnosticLinks.length > 0, `CTA mini-diagnostic absent : ${file}`);
-    for (const { url } of diagnosticLinks) {
-      assert.deepEqual(parseContactContext(url.search), { need: 'artisans', origin: expectedOrigin }, file);
+    if (file === 'index.html') {
+      assert.match(sources.get(file), /id="developper-clientele"/);
+      const growthLinks = contextual.filter(link => link.label === 'Parlons de vos objectifs ↗');
+      assert.equal(growthLinks.length, 1, 'Un CTA généraliste pour développer la clientèle');
+      assert.deepEqual(parseContactContext(growthLinks[0].url.search), { need: 'appels', origin: expectedOrigin });
+      assert.doesNotMatch(sources.get(file), /besoin=artisans|Artisan du bâtiment : par quelle priorité commencer/);
+    } else {
+      const diagnosticLinks = links.filter(link => link.label === 'Demander mon mini-diagnostic offert');
+      assert.ok(diagnosticLinks.length > 0, `CTA mini-diagnostic absent : ${file}`);
+      for (const { url } of diagnosticLinks) {
+        assert.deepEqual(parseContactContext(url.search), { need: 'artisans', origin: expectedOrigin }, file);
+      }
     }
     assert.equal(resolveContactOrigin(expectedOrigin), expectedOrigin);
   }
