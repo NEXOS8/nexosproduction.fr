@@ -178,6 +178,37 @@ const contactLinks = [
   'https://wa.me/33631686832?text=Message%20confidentiel',
 ];
 
+test('La fonction Google reste inactive sans accord, après refus et après expiration', () => {
+  for (const stored of [null, record('denied'), record('granted', Date.now() - 1)]) {
+    const page = browser({ stored });
+    assert.equal(typeof page.window.gtag_report_conversion, 'function');
+    assert.equal(page.window.gtag_report_conversion(), true);
+    assert.equal(page.commands().some(command => command[0] === 'event'), false);
+  }
+  const page = browser({ stored: record('granted') });
+  page.advanceTime(120_000);
+  assert.equal(page.window.gtag_report_conversion(), true);
+  assert.equal(page.commands().some(command => command[0] === 'event'), false);
+  assert.equal(page.reloads(), 1);
+});
+
+test('La fonction Google transmet le bon identifiant et son callback ne navigue que si une URL est fournie', () => {
+  for (const url of [undefined, contactLinks[1]]) {
+    const page = browser({ stored: record('granted') });
+    const currentUrl = page.window.location.href;
+    assert.equal(page.window.gtag_report_conversion(url), false);
+    const events = page.window.dataLayer.filter(args => args[0] === 'event');
+    assert.equal(events.length, 1);
+    const parameters = events[0][2];
+    assert.equal(parameters.send_to, 'AW-18542587032/RIWUCLLQ-60dEJjZ5YlF');
+    assert.equal(typeof parameters.event_callback, 'function');
+    assert.doesNotMatch(JSON.stringify(parameters), /confidentiel|mailto:|subject=|body=/);
+    assert.equal(page.window.location.href, currentUrl);
+    parameters.event_callback();
+    assert.equal(page.window.location.href, url ?? currentUrl);
+  }
+});
+
 test('Aucun clic de contact n’est mesuré sans accord, après refus ou après retrait', () => {
   for (const stored of [null, record('denied'), record('granted', Date.now() - 1)]) {
     const page = browser({ stored });
@@ -200,8 +231,16 @@ test('Chaque canal envoie le libellé fourni, sans contenu du message, et conser
   for (const href of contactLinks) {
     const page = browser();
     page.accept();
+    const report = page.window.gtag_report_conversion;
+    let reports = 0;
+    page.window.gtag_report_conversion = (...args) => {
+      reports++;
+      assert.equal(args.length, 0, 'Le lien de contact et son message restent hors du suivi');
+      return report(...args);
+    };
     const click = page.contactClick(href, { ctrlKey: true });
     assert.equal(click.defaultPrevented, false);
+    assert.equal(reports, 1, 'Un seul appel de la fonction Google par clic');
     const conversions = page.commands().filter(command => command[0] === 'event');
     assert.deepEqual(conversions, [['event', 'conversion', {
       send_to: 'AW-18542587032/RIWUCLLQ-60dEJjZ5YlF',

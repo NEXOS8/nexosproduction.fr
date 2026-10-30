@@ -81,6 +81,29 @@
     document.head.appendChild(script);
   }
 
+  // Google Ads click snippet, exposed by the script loaded in each page's <head>.
+  // Calls without a URL preserve the contact link's native navigation.
+  window.gtag_report_conversion = function gtag_report_conversion(url) {
+    if (measurementConsent && consentExpiresAt <= Date.now()) {
+      synchronizeChoice();
+      return true;
+    }
+    if (!measurementConsent) return true;
+    const callback = function () {
+      if (typeof url !== 'undefined') window.location.href = url;
+    };
+    try {
+      window.gtag('event', 'conversion', {
+        send_to: CONTACT_CONVERSION,
+        event_callback: callback,
+      });
+    } catch {
+      // If measurement fails, an inline handler must still allow navigation.
+      return true;
+    }
+    return false;
+  };
+
   const panel = document.createElement('section');
   panel.className = 'google-consent';
   panel.hidden = true;
@@ -147,11 +170,7 @@
   // Count an explicit contact-link click, never a page view or draft preparation.
   // Delegation also covers links whose message is populated after form preparation.
   document.addEventListener('click', event => {
-    if (measurementConsent && consentExpiresAt <= Date.now()) {
-      synchronizeChoice();
-      return;
-    }
-    if (!measurementConsent || event.defaultPrevented || (event.button ?? 0) !== 0) return;
+    if (event.defaultPrevented || (event.button ?? 0) !== 0) return;
     const link = event.target?.closest?.('a[href]');
     if (!link) return;
     let destination;
@@ -164,12 +183,8 @@
       || (destination.protocol === 'https:' && destination.hostname === 'wa.me'
         && destination.pathname === '/33631686832');
     if (!isContact) return;
-    try {
-      // Do not send the link URL: it can contain the visitor's draft message.
-      window.gtag('event', 'conversion', { send_to: CONTACT_CONVERSION });
-    } catch {
-      // Measurement must never prevent opening the visitor's chosen contact app.
-    }
+    // Never pass the link URL: it can contain the visitor's draft message.
+    window.gtag_report_conversion();
     // Keep native navigation, including target=_blank and modifier keys.
   });
 

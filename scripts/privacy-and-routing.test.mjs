@@ -55,7 +55,7 @@ test('Les quinze pages proposent le même chargement publicitaire conditionnel e
     const scripts = [...source.matchAll(/<script\b[^>]*>/gi)].map(([tag]) => attributes(tag));
     const consent = scripts.filter(script => script.src?.startsWith('/assets/google-consent.js'));
     assert.equal(consent.length, 1, file);
-    assert.equal(consent[0].src, '/assets/google-consent.js?v=20261029-2', file);
+    assert.equal(consent[0].src, '/assets/google-consent.js?v=20261030-1', file);
     assert.match(source, /<script\b[^>]*\bdefer\b[^>]*google-consent\.js/, file);
     assert.match(source, /<link\b[^>]*href="\/assets\/google-consent\.css\?v=20261028-2"/, file);
     assert.match(source, /<footer\b[\s\S]*<button\b[^>]*data-consent-settings[^>]*>Gérer les cookies<\/button>/, file);
