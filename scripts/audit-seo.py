@@ -188,7 +188,7 @@ def main():
         if not route_file(urlsplit(icon_url).path).is_file():
             errors.append(f"Manifeste : icône absente : {icon_url}")
         assets.add(icon_url)
-    # Les imports de modules doivent aussi exister et être contrôlés en production.
+    # Les imports de modules et ressources CSS doivent aussi être contrôlés en production.
     pending = list(assets)
     inspected = set()
     while pending:
@@ -197,9 +197,13 @@ def main():
             continue
         inspected.add(asset_url)
         asset_file = route_file(urlsplit(asset_url).path)
-        if asset_file.suffix not in (".js", ".mjs"):
+        if asset_file.suffix not in (".js", ".mjs", ".css"):
             continue
-        for ref in re.findall(r"\b(?:import|export)\s+(?:[^;\n]*?\s+from\s+)?['\"]([^'\"]+)['\"]", asset_file.read_text()):
+        source = asset_file.read_text()
+        refs = (re.findall(r"url\(\s*['\"]?([^\s)'\"]+)", source)
+                if asset_file.suffix == ".css" else
+                re.findall(r"\b(?:import|export)\s+(?:[^;\n]*?\s+from\s+)?['\"]([^'\"]+)['\"]", source))
+        for ref in refs:
             imported = urljoin(asset_url, ref)
             if urlsplit(imported).netloc != urlsplit(ORIGIN).netloc:
                 continue

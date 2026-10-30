@@ -12,13 +12,16 @@
   <meta name="theme-color" content="#f5f3ed">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon-v2.png">
   <link rel="manifest" href="/site.webmanifest">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700;750&amp;display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/dm-sans-v17-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/dm-sans.css?v=20261029-1">
+
+
   <link rel="stylesheet" href="/assets/redesign.css?v=20261023-1">
 
   <script type="module" src="/assets/site.js?v=20261023-1"></script>
 
+  <link rel="stylesheet" href="/assets/google-consent.css?v=20261028-2">
+  <script defer src="/assets/google-consent.js?v=20261029-2"></script>
 </head>
 <body>
 <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -52,6 +55,7 @@
     <p>Nous collectons uniquement les données strictement nécessaires&nbsp;:</p>
     <ul>
       <li><strong>Lorsque vous nous contactez</strong> (e-mail, téléphone ou WhatsApp)&nbsp;: les coordonnées et les informations que vous choisissez de nous transmettre.</li>
+      <li><strong>Mesure publicitaire, si vous l’acceptez</strong>&nbsp;: Google Ads peut traiter des informations de navigation, les pages visitées, les identifiants de clic publicitaire et de cookies ainsi que des données techniques, dont l’adresse IP et le navigateur. Le choix conservé sur votre appareil contient uniquement votre accord ou votre refus et son échéance.</li>
       <li><strong>Données techniques de navigation</strong>&nbsp;: adresse IP, type de navigateur et journaux serveur, traités par notre hébergeur à des fins de sécurité et de bon fonctionnement.</li>
     </ul>
     <p>Le préparateur de message fonctionne dans votre navigateur&nbsp;: il ne stocke pas vos saisies et ne les envoie pas automatiquement à NexosLocal. Il affiche un aperçu que vous pouvez relire, copier ou ouvrir dans votre messagerie. Le métier est demandé pour préparer le mini-diagnostic artisans&nbsp;; la zone, le site ou la fiche Google et l'objectif sont facultatifs. Une provenance, lorsqu'elle figure parmi les parcours prévus du site, peut être ajoutée au brouillon.</p>
@@ -63,13 +67,15 @@
       <li>Exécuter les prestations commandées (base&nbsp;: exécution du contrat).</li>
       <li>Respecter nos obligations comptables et légales (base&nbsp;: obligation légale).</li>
       <li>Assurer la sécurité du site (base&nbsp;: intérêt légitime).</li>
+      <li>Mesurer les visites et les actions attribuables à nos annonces Google Ads, notamment les clics sur nos liens de téléphone, d’e-mail et de WhatsApp (base&nbsp;: votre consentement, retirable à tout moment).</li>
     </ul>
 
     <h2>4. Destinataires et sous-traitants</h2>
     <p>Vos données ne sont jamais vendues. Elles peuvent être traitées par nos sous-traitants techniques&nbsp;:</p>
     <ul>
       <li><strong>Vercel Inc.</strong>&nbsp;: hébergement et traitement des données techniques nécessaires au fonctionnement du site. Les lieux de traitement et les garanties applicables dépendent des conditions de ce prestataire.</li>
-      <li><strong>Google Fonts</strong>&nbsp;: les polices d'écriture sont actuellement chargées depuis les serveurs de Google, ce qui peut transmettre votre adresse IP à Google. <!-- Recommandation : auto-héberger les polices pour supprimer ce transfert. --></li>
+      <li><strong>Google Ads</strong>&nbsp;: mesure de l’efficacité publicitaire uniquement après acceptation du suivi. Google peut traiter ces données hors de l’Union européenne, selon ses conditions et garanties de transfert. Consultez <a href="https://business.safety.google/privacy/" target="_blank" rel="noopener noreferrer">les informations de Google sur la protection des données</a>.</li>
+      <li><strong>Polices d’écriture</strong>&nbsp;: les polices sont hébergées avec le site et ne nécessitent aucun chargement depuis Google Fonts.</li>
     </ul>
     <p>Lorsque vous ouvrez ou envoyez un message, votre service de messagerie ou WhatsApp intervient également selon ses propres conditions. Vous pouvez toujours utiliser directement l'adresse <a href="mailto:contact@nexoslocal.fr">contact@nexoslocal.fr</a> ou le téléphone, sans passer par le préparateur.</p>
 
@@ -78,11 +84,16 @@
       <li>Données de prospects (demandes sans suite)&nbsp;: 3 ans à compter du dernier contact.</li>
       <li>Données de clients&nbsp;: durée de la relation contractuelle, puis archivage selon les obligations légales (jusqu'à 10 ans pour les documents comptables).</li>
       <li>Journaux techniques&nbsp;: durée courte définie par l'hébergeur.</li>
+      <li>Choix relatif au suivi publicitaire&nbsp;: 180 jours sur votre appareil, pour l’acceptation comme pour le refus, lorsque le navigateur permet sa mémorisation.</li>
+      <li>Cookies de mesure Google Ads dont le nom commence par <code>_gcl_</code>&nbsp;: 90 jours selon <a href="https://policies.google.com/technologies/cookies?hl=fr" target="_blank" rel="noopener noreferrer">la documentation de Google sur les cookies</a>. Les traitements et durées propres à Google sont décrits dans ses informations de confidentialité.</li>
     </ul>
 
-    <h2>6. Suivi publicitaire et mesure</h2>
-    <p>Les balises Google Ads et Google Tag Manager ont été retirées du site. NexosLocal n'y active pas d'outil publicitaire ni de mesure d'audience de remplacement. Le préparateur de message n'utilise ni cookie ni stockage local pour conserver vos saisies.</p>
-    <p>Google Search Console est utilisé pour consulter les statistiques de présence du site dans la recherche Google, sans ajouter de script de mesure aux pages. Ces statistiques, les clics sur les contacts et les véritables messages reçus sont des éléments distincts. Cette description du fonctionnement du site ne constitue pas une validation générale de sa conformité juridique.</p>
+    <h2 id="publicite">6. Suivi publicitaire et mesure</h2>
+    <p>Une balise Google Ads est installée sur les pages du site pour mesurer l’efficacité de nos annonces. La bibliothèque publicitaire de Google n’est chargée qu’après votre acceptation&nbsp;: aucune requête de ce suivi publicitaire n’est envoyée avant votre accord ou lorsque vous le refusez. Le site reste utilisable quel que soit votre choix.</p>
+    <p>Le bandeau propose «&nbsp;Accepter&nbsp;» et «&nbsp;Refuser&nbsp;» avec la même facilité. Votre choix est mémorisé pendant 180 jours lorsque le navigateur l’autorise. Vous pouvez le modifier à tout moment avec «&nbsp;Gérer les cookies&nbsp;» en bas de chaque page ou avec le bouton ci-dessous. Le retrait de votre accord arrête le suivi sur les pages rechargées et supprime les cookies de mesure accessibles sur le domaine du site&nbsp;; il ne supprime pas automatiquement les données déjà transmises à Google.</p>
+    <p><button type="button" class="cookie-settings" data-consent-settings hidden>Modifier mon choix de cookies</button></p>
+    <p>Cette intégration active uniquement la mesure publicitaire après accord. La personnalisation publicitaire et le stockage Google Analytics restent désactivés. Aucun conteneur Google Tag Manager n’est installé. Le préparateur de message ne conserve pas vos saisies dans des cookies ou le stockage local et ne les transmet pas aux outils de mesure.</p>
+    <p>Google Search Console sert à consulter la présence du site dans la recherche Google, sans script de mesure ajouté pour ce service. Une visite de la page contact, un clic vers une messagerie et un véritable message reçu restent des éléments distincts. Après votre accord au suivi, un clic sur nos liens de téléphone, d’e-mail ou de WhatsApp déclenche l’événement publicitaire « Contact ». Cet événement mesure une intention de contact, sans confirmer un appel abouti, un message envoyé, une demande reçue ou une vente. Une visite de page, la préparation d’un brouillon et les boutons de copie ne déclenchent pas cet événement. Le contenu du message et l’URL du lien de messagerie ne sont pas ajoutés aux données de cet événement. Cette description du fonctionnement du site ne constitue pas une validation générale de sa conformité juridique.</p>
 
     <h2>7. Vos droits</h2>
     <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité de vos données. Pour les exercer, écrivez à <a href="mailto:contact@nexoslocal.fr">contact@nexoslocal.fr</a>. Vous pouvez également introduire une réclamation auprès de la <strong>CNIL</strong> (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer nofollow">cnil.fr</a>).</p>
@@ -90,11 +101,11 @@
     <h2>8. Sécurité</h2>
     <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées (HTTPS, en-têtes de sécurité, accès restreints) pour protéger vos données contre tout accès non autorisé, perte ou altération.</p>
 
-    <p style="margin-top:2rem;color:var(--text-muted);font-size:0.85rem">Dernière mise à jour&nbsp;: 23 octobre 2026.</p>
+    <p style="margin-top:2rem;color:var(--text-muted);font-size:0.85rem">Dernière mise à jour&nbsp;: 30 octobre 2026.</p>
   </div>
 </main>
 
-<footer class="footer"><div class="container"><div class="footer-top"><a href="/" class="brand-lockup" aria-label="NexosLocal, accueil"><span class="brand-symbol" aria-hidden="true">n.</span><span class="brand">nexos<span>local</span></span></a><p>Conseil en acquisition client B2C.</p><a class="back-top" href="#contenu">Retour en haut ↑</a></div><div class="footer-grid"><div class="footer-brand"><p>Générer plus de demandes entrantes, moins dépendre de la prospection et relier les actions aux revenus.</p><a href="mailto:contact@nexoslocal.fr" class="contact-link">contact@nexoslocal.fr ↗</a><a href="tel:+33631686832" class="contact-link">06 31 68 68 32</a></div><div class="footer-col"><h4>Acquisition B2C</h4><ul><li><a href="/strategie-acquisition-client-b2c">Stratégie d’acquisition</a></li><li><a href="/audit-acquisition">Diagnostic</a></li><li><a href="/generer-plus-de-prospects-b2c">Guide prospects B2C</a></li><li><a href="/optimisation-conversion">Conversion</a></li><li><a href="/crm-automatisation">Suivi des prospects</a></li></ul></div><div class="footer-col"><h4>NexosLocal</h4><ul><li><a href="/artisans-batiment">Pour les artisans du bâtiment</a></li><li><a href="/#apropos">À propos de NexosLocal</a></li><li><a href="/referencement-naturel">Référencement naturel</a></li><li><a href="/referencement-local">Référencement local</a></li><li><a href="/contact?besoin=appels">Nous contacter</a></li></ul></div></div><div class="footer-bar"><p>© 2026 NexosLocal · France</p><div><a href="/mentions-legales">Mentions légales</a><a href="/confidentialite">Confidentialité</a><a href="/cgv">CGV</a></div></div></div></footer>
+<footer class="footer"><div class="container"><div class="footer-top"><a href="/" class="brand-lockup" aria-label="NexosLocal, accueil"><span class="brand-symbol" aria-hidden="true">n.</span><span class="brand">nexos<span>local</span></span></a><p>Conseil en acquisition client B2C.</p><a class="back-top" href="#contenu">Retour en haut ↑</a></div><div class="footer-grid"><div class="footer-brand"><p>Générer plus de demandes entrantes, moins dépendre de la prospection et relier les actions aux revenus.</p><a href="mailto:contact@nexoslocal.fr" class="contact-link">contact@nexoslocal.fr ↗</a><a href="tel:+33631686832" class="contact-link">06 31 68 68 32</a></div><div class="footer-col"><h4>Acquisition B2C</h4><ul><li><a href="/strategie-acquisition-client-b2c">Stratégie d’acquisition</a></li><li><a href="/audit-acquisition">Diagnostic</a></li><li><a href="/generer-plus-de-prospects-b2c">Guide prospects B2C</a></li><li><a href="/optimisation-conversion">Conversion</a></li><li><a href="/crm-automatisation">Suivi des prospects</a></li></ul></div><div class="footer-col"><h4>NexosLocal</h4><ul><li><a href="/artisans-batiment">Pour les artisans du bâtiment</a></li><li><a href="/#apropos">À propos de NexosLocal</a></li><li><a href="/referencement-naturel">Référencement naturel</a></li><li><a href="/referencement-local">Référencement local</a></li><li><a href="/contact?besoin=appels">Nous contacter</a></li></ul></div></div><div class="footer-bar"><p>© 2026 NexosLocal · France</p><div><a href="/mentions-legales">Mentions légales</a><a href="/confidentialite">Confidentialité</a><a href="/cgv">CGV</a><button type="button" class="cookie-settings" data-consent-settings hidden>Gérer les cookies</button></div></div></div></footer>
 
 </body>
 </html>

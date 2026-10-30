@@ -38,7 +38,7 @@ function sitemapEntries(source) {
   return map;
 }
 
-test('Les quinze pages ne contiennent plus de balise ou commentaire publicitaire Google', () => {
+test('Les quinze pages ne chargent aucune balise Google directement, avant le consentement', () => {
   assert.equal(htmlFiles.length, 15);
   const advertising = /googletagmanager\.com|googleadservices\.com|doubleclick\.net|google-analytics\.com|\bGTM-[A-Z0-9]+\b|\bAW-\d+\b|\bgtag\s*\(|\bdataLayer\b|Google\s+Tag\s+Manager|Google\s+(?:Ads|tag)\b/i;
   for (const [file, source] of sources) {
@@ -48,6 +48,23 @@ test('Les quinze pages ne contiennent plus de balise ou commentaire publicitaire
       assert.doesNotMatch(block, advertising, file);
     }
   }
+});
+
+test('Les quinze pages proposent le même chargement publicitaire conditionnel et un choix modifiable', async () => {
+  for (const [file, source] of sources) {
+    const scripts = [...source.matchAll(/<script\b[^>]*>/gi)].map(([tag]) => attributes(tag));
+    const consent = scripts.filter(script => script.src?.startsWith('/assets/google-consent.js'));
+    assert.equal(consent.length, 1, file);
+    assert.equal(consent[0].src, '/assets/google-consent.js?v=20261029-2', file);
+    assert.match(source, /<script\b[^>]*\bdefer\b[^>]*google-consent\.js/, file);
+    assert.match(source, /<link\b[^>]*href="\/assets\/google-consent\.css\?v=20261028-2"/, file);
+    assert.match(source, /<footer\b[\s\S]*<button\b[^>]*data-consent-settings[^>]*>Gérer les cookies<\/button>/, file);
+    assert.doesNotMatch(source, /https:\/\/fonts\.(?:googleapis|gstatic)\.com/, file);
+    assert.match(source, /href="\/assets\/dm-sans\.css\?v=20261029-1"/, file);
+  }
+  assert.match(sources.get('confidentialite.html'), /id="publicite"/);
+  assert.doesNotMatch(sources.get('confidentialite.html'), /balises Google Ads et Google Tag Manager ont été retirées/);
+  assert.match(await read('assets/google-consent.js'), /AW-18542587032/);
 });
 
 test('Le script partagé est chargé une fois en module avec sa nouvelle version sur les quinze pages', () => {
@@ -121,15 +138,11 @@ test('Les routes et URL canoniques existantes sont conservées par rapport à HE
   assert.deepEqual([...currentSitemap.keys()].sort(), [...previousSitemap.keys()].sort());
 });
 
-test('Seules les six pages substantiellement modifiées portent un lastmod au 23 octobre', async () => {
-  const updated = new Set(['/', '/artisans-batiment', '/obtenir-plus-demandes-devis-artisan',
-    '/referencement-local', '/contact', '/confidentialite'].map(path => origin + path));
+test('La politique de confidentialité reçoit un lastmod au 30 octobre et les autres dates sont conservées', async () => {
   const current = sitemapEntries(await read('sitemap.xml'));
   const previous = sitemapEntries(fromHead('sitemap.xml'));
   assert.equal(current.size, 15);
-  const datedToday = new Set([...current].filter(([, date]) => date === '2026-10-23').map(([url]) => url));
-  assert.deepEqual(datedToday, updated);
   for (const [url, date] of current) {
-    assert.equal(date, updated.has(url) ? '2026-10-23' : previous.get(url), url);
+    assert.equal(date, url === origin + '/confidentialite' ? '2026-10-30' : previous.get(url), url);
   }
 });
